@@ -1,0 +1,16 @@
+{
+  "name": "superhero-school",
+  "version": "0.0.1",
+  "description": "Educating the world on super heros",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "marvel",
+    "dc",
+    "superheros"
+  ],
+  "author": "Daiyan Alamgir",
+  "license": "ISC"
+}
