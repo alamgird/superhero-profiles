@@ -1,16 +1,15 @@
 import 'materialize-css/dist/css/materialize.min.css';
-
-import 'materialize-css/dist/js/materialize.min';
-
+import 'materialize-css/dist/js/materialize';
 import * as _ from 'lodash';
 import React from 'react';
 import { render } from 'react-dom';
 
-const HeroSearch = () => {
+const HeroSearch = (props) => {
     return (
         <div className="row">
             <div className="input-field col s12">
-                <input id="search" type="text" />
+                <input id="search" type="text" onChange={props.onChange} />
+                <label htmlFor="search">Search Your Hero</label>
             </div>
         </div>
     );
@@ -21,6 +20,7 @@ class HeroList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            q: props.q || '',
             heroes: [{
                 name: 'Adam Warlock',
                 img: 'http://i.annihil.us/u/prod/marvel/i/mg/a/f0/5202887448860.jpg'
@@ -33,13 +33,31 @@ class HeroList extends React.Component {
             }, {
                 name: 'Iron Man',
                 img: 'http://i.annihil.us/u/prod/marvel/i/mg/9/c0/527bb7b37ff55.jpg'
+            }, {
+                name: 'Scarlet Witch',
+                img: 'http://i.annihil.us/u/prod/marvel/i/mg/6/70/5261a7d7c394b.jpg'
+            }, {
+                name: 'The Vision',
+                img: 'http://i.annihil.us/u/prod/marvel/i/mg/9/d0/5111527040594.jpg'
+            }, {
+                name: 'Black Widow',
+                img: 'http://i.annihil.us/u/prod/marvel/i/mg/f/30/50fecad1f395b.jpg'
             }]
         };
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            q: nextProps.q
+        });
+    }
+
     render() {
 
-        var items = _.chunk(this.state.heroes, 3);
+        var items = _.chunk(
+            this.state.heroes.filter(
+                (hero) => hero.name.toUpperCase().indexOf(this.state.q.toUpperCase()) !== -1)
+            , 3);
 
         return (
             <div>
@@ -79,14 +97,30 @@ const Hero = (props) => {
     );
 };
 
-const HerosApp = () => {
-    return (
-        <div>
-            <HeroSearch />
-            <HeroList />
-        </div>
-    );
-};
+class HerosApp extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            q: ''
+        }
+    }
+
+    onHeroSearched(e) {
+        this.setState({
+            q: e.target.value
+        });
+    }
+
+    render() {
+        return (
+            <div>
+                <HeroSearch onChange={this.onHeroSearched.bind(this)} />
+                <HeroList q={this.state.q} />
+            </div>
+        );
+    }
+}
 
 const root = document.querySelector('#app');
 render(<HerosApp />, root);

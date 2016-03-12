@@ -28,11 +28,17 @@ module.exports = {
             }
         ]
     },
+    resolve: {
+        alias: {
+            $: 'jquery',
+            jQuery: 'jquery'
+        }
+    },
     plugins: [
         new webpack.ProvidePlugin({
-            $: "jquery",
-            jQuery: "jquery",
-            "window.jQuery": "jquery"
+            $: 'jquery',
+            jQuery: 'jquery',
+            "window.jQuery": 'jquery'
         })
     ]
 };
