@@ -1,11 +1,13 @@
 import 'lodash';
 import React from 'react';
 import Hero from '../Hero/Hero';
+import HeroService from '../../services/HeroService';
 
 class HeroList extends React.Component {
 
     constructor(props) {
         super(props);
+        this.service = new HeroService();
         this.state = {
             q: props.q || '',
             heroes: [{
@@ -36,8 +38,22 @@ class HeroList extends React.Component {
                 name: 'Black Widow',
                 img: 'http://i.annihil.us/u/prod/marvel/i/mg/f/30/50fecad1f395b.jpg',
                 story: 'Not Available'
+            }, {
+                name: 'Spiderman',
+                img: 'http://i.annihil.us/u/prod/marvel/i/mg/3/50/526548a343e4b.jpg',
+                story: 'itten by a radioactive spider, high school student Peter Parker gained the speed, strength and powers of a spider. Adopting the name Spider-Man, Peter hoped to start a career using his new abilities. Taught that with great power comes great responsibility, Spidey has vowed to use his powers to help people.'
+            }, {
+                name: 'Storm',
+                img: 'http://i.annihil.us/u/prod/marvel/i/mg/6/40/526963dad214d.jpg',
+                story: 'Ororo Monroe is the descendant of an ancient line of African priestesses, all of whom have white hair, blue eyes, and the potential to wield magic.'
             }]
         };
+    }
+
+    componentWillMount() {
+        //this.service.getHeroes(
+        //    (heroes) => this.setState({ heroes: heroes }),
+        //    () => console.log(error));
     }
 
     componentWillReceiveProps(nextProps) {
